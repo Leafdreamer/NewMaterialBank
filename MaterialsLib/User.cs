@@ -31,7 +31,7 @@ namespace MaterialsLib
 
         public void ValidatePassword()
         {
-            if (Password.Length < 3)
+            if (Password.Length <= 3)
             {
                 throw new ArgumentException("Password must be at least 3 characters long.");
             }

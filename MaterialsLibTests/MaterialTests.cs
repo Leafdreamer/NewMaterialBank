@@ -52,5 +52,29 @@ namespace MaterialsLibTests
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => m3.ValidateAmount());
         }
 
+        [TestMethod()]
+        public void ValidateEmailTest()
+        {
+            User u1 = new User(1, "admin@email.com", "1234", true);
+            User u2 = new User(1, "adminATemail.com", "1234", true);
+            User u3 = new User(1, "admin@emailDOTcom", "1234", true);
+
+            // u1 contains a valid e-mail, u2 and u3 do not
+            u1.ValidateEmail();
+            Assert.ThrowsException<ArgumentException>(() => u2.ValidateEmail());
+            Assert.ThrowsException<ArgumentException>(() => u3.ValidateEmail());
+        }
+
+        [TestMethod()]
+        public void ValidatePasswordTest()
+        {
+            User u1 = new User(1, "admin@email.com", "1234", true);
+            User u2 = new User(1, "admin@email.com", "123", true);
+
+            // u1 contains a valid password, u2 does not
+            u1.ValidateEmail();
+            Assert.ThrowsException<ArgumentException>(() => u2.ValidatePassword());
+        }
+
     }
 }
