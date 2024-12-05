@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj": {}
+    "c:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj": {
+    "c:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj",
+        "projectUniqueName": "c:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj",
         "projectName": "MaterialsLib",
-        "projectPath": "C:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj",
+        "projectPath": "c:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\MaterialsLib.csproj",
         "packagesPath": "C:\\Users\\Luna Nia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\obj\\",
+        "outputPath": "c:\\Users\\Luna Nia\\Documents\\NewMaterialBank\\NewMaterialBank\\MaterialsLib\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

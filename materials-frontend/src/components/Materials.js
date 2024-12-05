@@ -1,35 +1,19 @@
-// import Material from "./Material";
 import { useEffect, useState } from "react";
-// import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-// import { v4 as uuidv4 } from "uuid";
 
 function Materials() {
 	const [materials, setMaterials] = useState([]);
 	const [filter, setFilter] = useState('');
 	const [sortMethod, setSortMethod] = useState({key: 'updatedAt', direction: 'descending'})
+	const [warehouse, setWarehouse] = useState(1)
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
 
-	//const handleEdit = (id) => {
-	//	navigate(`/Materials/${id}`); // Navigate to edit page
-	//};
-
-	//const [materials, setMaterials] = useState(
-	//	[
-	//		{name: "Plank", amount: 10},
-	//		{name: "Plank", amount: 15},
-	//		{name: "Nail", amount: 10},
-	//		{name: "Brick", amount: 10},
-	//		{name: "Brick", amount: 10},
-	//	]
-	//);
-
 	const fetchData = async () => {
 		try {
-		  const response = await fetch('http://localhost:5096/api/Materials', {
+		  const response = await fetch('http://localhost:5096/api/Materials?type=m', {
 			method: 'GET', // or 'POST', 'PUT', etc.
 			headers: {
 				'Content-Type': 'application/json',
@@ -60,15 +44,6 @@ function Materials() {
 	  if (loading) return <p>Loading...</p>;
 	  if (error) return <p>An error has occurred: {error}</p>;
 
-	
-	//useEffect(() => {
-	//	fetch('url')
-	//		.then((response) => response.json())
-	//		.then((data) => {
-	//			setMaterials(data[0]);
-	//			console.log(data[0]);
-	//		})
-	//}, []);
 
 	  // New List with Sorted Materials
 	  const sortedMaterials = [...materials].sort((a,b) => {
@@ -91,7 +66,7 @@ function Materials() {
 
 	  // Filtered materials based on the filter input IT WORKS NOW YIPPEE now also updated to work with sorting
 	  const filteredMaterials = sortedMaterials.filter(material =>
-		material.name.toLowerCase().includes(filter.toLowerCase()) || material.type.toLowerCase().includes(filter.toLowerCase()) || material.tags.toLowerCase().includes(filter.toLowerCase()) || material.amount.toString().toLowerCase().includes(filter.toLowerCase())
+		(material.warehouseNo == warehouse) && (material.name.toLowerCase().includes(filter.toLowerCase()) || material.type.toLowerCase().includes(filter.toLowerCase()) || material.description.toLowerCase().includes(filter.toLowerCase()) || material.amount.toString().toLowerCase().includes(filter.toLowerCase()))
 	  );
 
 	  // Arrow icons which are neat and user-friendly
@@ -118,6 +93,25 @@ function Materials() {
 		  </div>
 	
 		  {error && <p className="text-red-500">{error}</p>}
+
+		  <div className="flex justify-between items-center mb-4">
+		   <button
+			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  onClick={() => setWarehouse(1)}>
+			  Warehouse 1
+		   </button>
+		   <button
+			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  onClick={() => setWarehouse(2)}>
+			  Warehouse 2
+		   </button>
+		   <button
+			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  onClick={() => setWarehouse(3)}>
+			  Warehouse 3
+		   </button>
+		  </div>
+		  
 	
 		  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
     		<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -137,14 +131,14 @@ function Materials() {
             	<th
               	scope="col"
               	className="px-6 py-3 cursor-pointer"
-              	onClick={() => requestSorting('tags')}>
-              	Tags {getSortIcon('tags')}
-            	</th>
-            	<th
-              	scope="col"
-              	className="px-6 py-3 cursor-pointer"
               	onClick={() => requestSorting('amount')}>
               	Amount {getSortIcon('amount')}
+            	</th>
+				<th
+              	scope="col"
+              	className="px-6 py-3 cursor-pointer"
+              	onClick={() => requestSorting('description')}>
+              	Description {getSortIcon('description')}
             	</th>
             	<th
               	scope="col"
@@ -171,8 +165,8 @@ function Materials() {
 					<tr key={material.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 					  <td className="px-6 py-4">{material.name}</td>
 					  <td className="px-6 py-4">{material.type}</td>
-					  <td className="px-6 py-4">{material.tags}</td>
 					  <td className="px-6 py-4">{material.amount}</td>
+					  <td className="px-6 py-4">{material.description}</td>
 					  <td className="px-6 py-4">{formattedCreatedAt}</td>
 					  <td className="px-6 py-4">{formattedUpdatedAt}</td>
 					  <td className="px-6 py-4">

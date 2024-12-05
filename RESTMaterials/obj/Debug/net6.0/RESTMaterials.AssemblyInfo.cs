@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RESTMaterials")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c01052ea16c2c7e0adf6d06100cdc45cf5e6c773")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+450f770c47ab38159b15989b7145ca5565e68440")]
 [assembly: System.Reflection.AssemblyProductAttribute("RESTMaterials")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RESTMaterials")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

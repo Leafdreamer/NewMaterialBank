@@ -67,3 +67,4 @@ c:\Users\Luna Nia\Documents\NewMaterialBank\NewMaterialBank\RESTMaterials\obj\De
 c:\Users\Luna Nia\Documents\NewMaterialBank\NewMaterialBank\RESTMaterials\obj\Debug\net6.0\RESTMaterials.pdb
 c:\Users\Luna Nia\Documents\NewMaterialBank\NewMaterialBank\RESTMaterials\obj\Debug\net6.0\RESTMaterials.genruntimeconfig.cache
 c:\Users\Luna Nia\Documents\NewMaterialBank\NewMaterialBank\RESTMaterials\obj\Debug\net6.0\ref\RESTMaterials.dll
+c:\Users\Luna Nia\Documents\NewMaterialBank\NewMaterialBank\RESTMaterials\obj\Debug\net6.0\RESTMaterials.sourcelink.json
