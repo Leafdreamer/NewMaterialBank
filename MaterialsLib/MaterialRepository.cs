@@ -53,6 +53,11 @@ namespace MaterialsLib
             return userList.FirstOrDefault(x => x.Id == id);
         }
 
+        public User? GetUserByEmail(string email)
+        {
+            return userList.FirstOrDefault(x => x.Email == email);
+        }
+
         public Material AddMaterial(Material material)
         {
             material.ValidateName();

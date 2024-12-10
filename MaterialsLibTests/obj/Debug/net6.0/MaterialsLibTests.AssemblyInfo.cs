@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaterialsLibTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c01052ea16c2c7e0adf6d06100cdc45cf5e6c773")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4b42cd4aa17f46eb157531c5af7a9faa07a2913")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaterialsLibTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaterialsLibTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

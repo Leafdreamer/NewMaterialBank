@@ -3,17 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 function Create() {
     const [material, setMaterial] = useState([]);
-    // const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-	const handleCreate = async (event) => {
+	  const handleCreate = async (event) => {
         event.preventDefault();
         material.createdAt = new Date().toISOString();
         material.updatedAt = new Date().toISOString(); 
       
         try {
-          const response = await fetch(`http://localhost:5096/api/Materials`, {
+          const response = await fetch(`http://localhost:5096/api/Materials?type=m`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
@@ -38,7 +37,18 @@ function Create() {
       };
 
 
-     if (error) return <p>{error}</p>;
+     if (error) return (
+      <div className="mt-4">
+        <p>{error}</p>
+        <button
+          type="button"
+          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+          onClick={() => navigate('/')}>
+          Return to List
+        </button>
+      </div>
+     );
+
 
 
      return (
@@ -49,8 +59,8 @@ function Create() {
                 <tr>
                   <th scope="col" className="px-6 py-3">Name</th>
                   <th scope="col" className="px-6 py-3">Type</th>
-                  <th scope="col" className="px-6 py-3">Tags</th>
                   <th scope="col" className="px-6 py-3">Amount</th>
+                  <th scope="col" className="px-6 py-3">Description</th>
                 </tr>
               </thead>
               <tbody className="border-collapse border border-slate-400 border-spacing-3">
@@ -65,28 +75,28 @@ function Create() {
                     />
                   </td>
                   <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      name="type"
-                      value={material.type || ''}
+                    <select value={material.type}
                       onChange={handleChange}
-                      className="border rounded px-2 py-1 w-full"
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      name="tags"
-                      value={material.tags || ''}
-                      onChange={handleChange}
-                      className="border rounded px-2 py-1 w-full"
-                    />
+                      className="border rounded px-2 py-1 w-full">
+                        <option value="Metal">Metal</option>
+                        <option value="Ceramic">Ceramic</option>
+                        <option value="Plastic">Plastic</option>
+                    </select>
                   </td>
                   <td className="px-6 py-4">
                     <input
                       type="number"
                       name="amount"
                       value={material.amount || ''}
+                      onChange={handleChange}
+                      className="border rounded px-2 py-1 w-full"
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <input
+                      type="text"
+                      name="description"
+                      value={material.description || ''}
                       onChange={handleChange}
                       className="border rounded px-2 py-1 w-full"
                     />

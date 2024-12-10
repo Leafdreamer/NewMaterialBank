@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import currentUser from './Login'
 
 function Materials() {
 	const [materials, setMaterials] = useState([]);
@@ -8,7 +9,6 @@ function Materials() {
 	const [warehouse, setWarehouse] = useState(1)
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
 	const navigate = useNavigate();
 
 	const fetchData = async () => {
@@ -43,6 +43,18 @@ function Materials() {
 
 	  if (loading) return <p>Loading...</p>;
 	  if (error) return <p>An error has occurred: {error}</p>;
+	  if (currentUser == []) return
+		(
+		<div className="mt-4">
+		  <h1>Access Denied. Please log in to continue.</h1>
+		  <button
+			type="button"
+			className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+			onClick={() => navigate('/Login')}>
+			Login
+		  </button>
+		</div>
+		);
 
 
 	  // New List with Sorted Materials
@@ -74,7 +86,6 @@ function Materials() {
 		if (sortMethod.key !== key) return null;
 		return sortMethod.direction === 'ascending' ? ' | Λ' : ' | V';
 	  }
-	  
 
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -85,6 +96,7 @@ function Materials() {
 			  value={filter}
 			  onChange={(e) => setFilter(e.target.value)}
 			  className="border rounded px-4 py-2 text-gray-700 w-1/3"/>
+			<h1>Welcome, {currentUser.email}!</h1>
 			<button
 			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
 			  onClick={() => navigate('/create')}>
