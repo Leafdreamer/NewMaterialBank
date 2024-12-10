@@ -51,30 +51,29 @@ namespace RESTMaterials.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<object> Get(int id, string? type = "m")
+        public ActionResult<object> Get(int id)
         {
             Material? material = materials.GetMaterialById(id);
-            User? user = materials.GetUserById(id);
 
-            if ((type == "m") && !(material == null))
+            if (!(material == null))
             {
                 return Ok(material);
             }
-            else if (material == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
 
-            if ((type == "u") && !(user == null))
+        [HttpGet("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<User> Login(string email)
+        {
+            User? user = materials.GetUserByEmail(email);
+
+            if (!(user == null))
             {
                 return Ok(user);
             }
-            else if (user == null)
-            {
-                return NotFound();
-            }
-
-            return BadRequest();
+            return NotFound();
         }
 
         // POST api/<MaterialsController>

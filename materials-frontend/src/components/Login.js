@@ -2,50 +2,89 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [userList, setUserList] = useState([]);
-    const [currentUser, setCurrentUser] = useState([]);
+    const [user, setUser] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const userFetch = async () => {
-		try {
-		  const response = await fetch('http://localhost:5096/api/Materials?type=u', {
-			method: 'GET', // or 'POST', 'PUT', etc.
-			headers: {
-				'Content-Type': 'application/json',
-			  },
-		  });
-	  
-		  if (!response.ok) {
-			throw new Error('Network response was not ok');
-		  }
-	  
-		  const data = await response.json(); // assuming the response is JSON
-          setUserList(data);
-		  console.log(data);
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try 
+        {
+            var otherEmail = encodeURIComponent(email)
 
-
-		} catch (error) {
-		  setError(error.message);		
-		  console.error('There has been a problem with your fetch operation:', error);
-		}
-	  };
-
-    const userCheck = () => {
-        for (let i = 0; i < userList.length; i++) {
-            if ((userList[i].email == "admin@email.com") && (userList[i].password == "1234"))
+            const response = await fetch('http://localhost:5096/api/Materials/login?email=' + otherEmail, {
+                method: 'GET', 
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            console.log(data);
+            
+            if (data.status == 404)
             {
-                setCurrentUser(userList[i]);
-                break;
+                setError('Invalid username or password');
             }
+            else
+            {
+                setUser(data);
+                navigate('/materials'); // Redirect to dashboard or home
+            }
+            
+        } 
+        catch (error) {
+          setError('Invalid username or password');
         }
+      };
 
-        if (currentUser != [])
-            navigate('/')
-        else
-            setError("Email or password is incorrect.")
 
-    }
+      return (
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 className="text-2xl mb-4">Login</h2>
+            {error && <p className="text-red-500">{error}</p>}
+            <form onSubmit={handleLogin}>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Sign In
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+
 }
 
 export default Login;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import currentUser from './Login'
+import Login from './Login'
 
 function Materials() {
 	const [materials, setMaterials] = useState([]);
@@ -29,7 +29,6 @@ function Materials() {
 		  console.log(data);
 		  setLoading(false);
 
-
 		} catch (error) {
 		  setError(error.message);		
 		  console.error('There has been a problem with your fetch operation:', error);
@@ -43,14 +42,13 @@ function Materials() {
 
 	  if (loading) return <p>Loading...</p>;
 	  if (error) return <p>An error has occurred: {error}</p>;
-	  if (currentUser == []) return
-		(
+	  if (Login.email == '') return (
 		<div className="mt-4">
 		  <h1>Access Denied. Please log in to continue.</h1>
 		  <button
 			type="button"
 			className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
-			onClick={() => navigate('/Login')}>
+			onClick={() => navigate('/')}>
 			Login
 		  </button>
 		</div>
@@ -96,7 +94,7 @@ function Materials() {
 			  value={filter}
 			  onChange={(e) => setFilter(e.target.value)}
 			  className="border rounded px-4 py-2 text-gray-700 w-1/3"/>
-			<h1>Welcome, {currentUser.email}!</h1>
+			<h1>Welcome, {Login.email}!</h1>
 			<button
 			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
 			  onClick={() => navigate('/create')}>

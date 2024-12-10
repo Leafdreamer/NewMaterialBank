@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaterialsLib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4b42cd4aa17f46eb157531c5af7a9faa07a2913")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd88aad00cce4860c58a671265cd35a7e682d675")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaterialsLib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaterialsLib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

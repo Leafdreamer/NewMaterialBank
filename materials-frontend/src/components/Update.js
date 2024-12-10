@@ -53,7 +53,7 @@ function Update() {
             throw new Error('Failed to update the material');
           }
       
-          navigate('/');
+          navigate('/materials');
         } catch (error) {
           setError(`Failed to update the material: ${error}`);
         }
@@ -78,7 +78,7 @@ function Update() {
                 'Content-Type': 'application/json',
               },
             });
-            navigate('/');
+            navigate('/materials');
           } catch (error) {
             console.error("Error deleting material:", error);
           }
@@ -162,7 +162,7 @@ function Update() {
               <button
                 type="button"
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/materials')}
               >
                 Cancel
               </button>

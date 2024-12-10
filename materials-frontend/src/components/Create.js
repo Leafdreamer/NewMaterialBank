@@ -24,7 +24,7 @@ function Create() {
             throw new Error(`Failed to create the material.`);
           }
       
-          navigate('/');
+          navigate('/materials');
         } catch (error) {
           setError(`Failed to create the material.`);
         }
@@ -43,7 +43,7 @@ function Create() {
         <button
           type="button"
           className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
-          onClick={() => navigate('/')}>
+          onClick={() => navigate('/materials')}>
           Return to List
         </button>
       </div>
@@ -114,7 +114,7 @@ function Create() {
               <button
                 type="button"
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/materials')}
               >
                 Cancel
               </button>
