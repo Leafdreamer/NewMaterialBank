@@ -77,7 +77,7 @@ namespace RESTMaterials.Controllers
         }
 
         // POST api/<MaterialsController>
-        [HttpPost]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<object> Post([FromBody] Material value, string? type = "m")

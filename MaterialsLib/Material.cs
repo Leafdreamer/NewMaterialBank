@@ -37,7 +37,7 @@
 
         public void ValidateName()
         {
-            if (Name.Length < 1)
+            if (Name.Length <= 1)
             {
                 throw new ArgumentException("Name is a required field.");
             }
@@ -46,7 +46,7 @@
 
         public void ValidateType()
         {
-            if (Type.Length < 1)
+            if (Type.Length <= 1)
             {
                 throw new ArgumentException("Type is a required field.");
             }
