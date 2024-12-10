@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import AppContext from './Context';
 
 function Login() {
-    const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -22,15 +22,17 @@ function Login() {
             });
             const data = await response.json();
             console.log(data);
+            console.log(email);
+            AppContext.email = email;
+
             
-            if (data.status == 404)
+            if (data.email == email)
             {
-                setError('Invalid username or password');
+                navigate('/materials');
             }
             else
             {
-                setUser(data);
-                navigate('/materials'); // Redirect to dashboard or home
+                setError('Invalid username or password');
             }
             
         } 

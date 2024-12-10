@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Login from './Login'
+import AppContext from "./Context";
 
 function Materials() {
 	const [materials, setMaterials] = useState([]);
@@ -42,7 +42,7 @@ function Materials() {
 
 	  if (loading) return <p>Loading...</p>;
 	  if (error) return <p>An error has occurred: {error}</p>;
-	  if (Login.email == '') return (
+	  if (AppContext.email == '') return (
 		<div className="mt-4">
 		  <h1>Access Denied. Please log in to continue.</h1>
 		  <button
@@ -85,6 +85,11 @@ function Materials() {
 		return sortMethod.direction === 'ascending' ? ' | Λ' : ' | V';
 	  }
 
+	  const handleLogout = () => {
+		AppContext.email = ''
+		navigate('/')
+	  }
+
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 		  <div className="flex justify-between items-center mb-4">
@@ -94,11 +99,16 @@ function Materials() {
 			  value={filter}
 			  onChange={(e) => setFilter(e.target.value)}
 			  className="border rounded px-4 py-2 text-gray-700 w-1/3"/>
-			<h1>Welcome, {Login.email}!</h1>
+			<h1>Welcome, {AppContext.email}!</h1>
 			<button
 			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
 			  onClick={() => navigate('/create')}>
 			  Create New Material
+			</button>
+			<button
+			  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+			  onClick={() => handleLogout()}>
+			  Logout
 			</button>
 		  </div>
 	
@@ -106,17 +116,17 @@ function Materials() {
 
 		  <div className="flex justify-between items-center mb-4">
 		   <button
-			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
 			  onClick={() => setWarehouse(1)}>
 			  Warehouse 1
 		   </button>
 		   <button
-			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
 			  onClick={() => setWarehouse(2)}>
 			  Warehouse 2
 		   </button>
 		   <button
-			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
 			  onClick={() => setWarehouse(3)}>
 			  Warehouse 3
 		   </button>
