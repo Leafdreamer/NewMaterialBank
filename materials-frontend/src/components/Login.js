@@ -14,7 +14,7 @@ function Login() {
         {
             var otherEmail = encodeURIComponent(email)
 
-            const response = await fetch('http://localhost:5096/api/Materials/login?email=' + otherEmail, {
+            const response = await fetch('http://localhost:5096/api/Users/email?email=' + otherEmail, {
                 method: 'GET', 
                 headers: {
                   'Content-Type': 'application/json',
@@ -24,6 +24,7 @@ function Login() {
             console.log(data);
             console.log(email);
             AppContext.email = email;
+            AppContext.admin = data.admin;
 
             
             if (data.email == email)

@@ -9,20 +9,13 @@ namespace MaterialsLib
     public class MaterialRepository
     {
         private List<Material> materialList;
-        private List<User> userList;
         private int nextMatID;
-        private int nextUserID;
 
         public MaterialRepository()
         {
             materialList = new List<Material>();
-            userList = new List<User>();
 
             User u1 = new User(1, "admin@email.com", "1234", true);
-
-            userList.Add(u1);
-
-            nextUserID = 2;
 
             Material m1 = new Material(1, 1, "Steel Bar", "Metal", 2, "Small, Thingy", "", u1);
             Material m2 = new Material(2, 1, "Steel Screw", "Metal", 8, "Test Description", "", u1);
@@ -38,24 +31,9 @@ namespace MaterialsLib
             return new List<Material>(materialList);
         }
 
-        public List<User> GetAllUsers()
-        {
-            return new List<User>(userList);
-        }
-
         public Material? GetMaterialById(int id)
         {
             return materialList.FirstOrDefault(x => x.Id == id);
-        }
-
-        public User? GetUserById(int id)
-        {
-            return userList.FirstOrDefault(x => x.Id == id);
-        }
-
-        public User? GetUserByEmail(string email)
-        {
-            return userList.FirstOrDefault(x => x.Email == email);
         }
 
         public Material AddMaterial(Material material)
@@ -70,21 +48,6 @@ namespace MaterialsLib
             materialList.Add(material);
             return material;
         }
-
-        public User AddUser(User user)
-        {
-            user.ValidateEmail();
-            user.ValidatePassword();
-
-            user.Id = nextUserID;
-            nextUserID++;
-
-            user.Admin = false;
-
-            userList.Add(user);
-            return user;
-        }
-
         public Material? DeleteMaterial(int id)
         {
             Material? tbd = GetMaterialById(id);

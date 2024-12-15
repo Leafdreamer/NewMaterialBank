@@ -14,7 +14,7 @@ function Create() {
         var otherEmail = encodeURIComponent(AppContext.email)
 
         try {
-            const response = await fetch('http://localhost:5096/api/Materials/login?email=' + otherEmail, {
+            const response = await fetch('http://localhost:5096/api/Users/email?email=' + otherEmail, {
                 method: 'GET', 
                 headers: {
                   'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function Create() {
         }
       
         try {
-          const response = await fetch(`http://localhost:5096/api/Materials?type=m`, {
+          const response = await fetch(`http://localhost:5096/api/Materials`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',

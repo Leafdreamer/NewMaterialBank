@@ -13,7 +13,7 @@ function Materials() {
 
 	const fetchData = async () => {
 		try {
-		  const response = await fetch('http://localhost:5096/api/Materials?type=m', {
+		  const response = await fetch('http://localhost:5096/api/Materials', {
 			method: 'GET', // or 'POST', 'PUT', etc.
 			headers: {
 				'Content-Type': 'application/json',
@@ -83,12 +83,13 @@ function Materials() {
 	  const getSortIcon = (key) => {
 		if (sortMethod.key !== key) return null;
 		return sortMethod.direction === 'ascending' ? ' | Λ' : ' | V';
-	  }
+	  };
 
 	  const handleLogout = () => {
-		AppContext.email = ''
-		navigate('/')
-	  }
+		AppContext.email = '';
+		AppContext.admin = false;
+		navigate('/');
+	  };
 
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
