@@ -7,13 +7,19 @@ function Create() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+      material.warehouseNo = 1;
+      material.type = 'Metal';
+      }, []);
+
 	  const handleCreate = async (event) => {
         event.preventDefault();
         material.createdAt = new Date().toISOString();
         material.updatedAt = new Date().toISOString();
         var otherEmail = encodeURIComponent(AppContext.email)
 
-        try {
+        try 
+        {
             const response = await fetch('http://localhost:5096/api/Users/email?email=' + otherEmail, {
                 method: 'GET', 
                 headers: {
@@ -22,12 +28,14 @@ function Create() {
             });
             const data = await response.json();
             material.createdBy = data;
-
-        } catch (error) {
+        } 
+        catch (error) 
+        {
           setError(`Failed to validate user.`);
         }
       
-        try {
+        try 
+        {
           const response = await fetch(`http://localhost:5096/api/Materials`, {
             method: 'POST', 
             headers: {
@@ -43,7 +51,9 @@ function Create() {
           }
       
           navigate('/materials');
-        } catch (error) {
+        } 
+        catch (error) 
+        {
           setError(`Failed to create the material.`);
         }
       };
@@ -94,7 +104,7 @@ function Create() {
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                     </select>
-                  </td>
+                </td>
                 <td className="px-6 py-4">
                     <input
                       type="text"

@@ -16,7 +16,7 @@ namespace MaterialsLib
             userList = new List<User>();
 
             User u1 = new User(1, "admin@email.com", "1234", true);
-            User u2 = new User(1, "user@email.com", "1234", false);
+            User u2 = new User(2, "user@email.com", "1234", false);
 
             userList.Add(u1);
             userList.Add(u2);

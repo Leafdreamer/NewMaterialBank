@@ -27,7 +27,7 @@ function Login() {
             AppContext.admin = data.admin;
 
             
-            if (data.email == email)
+            if ((data.email == email) && (data.password == password))
             {
                 navigate('/materials');
             }
