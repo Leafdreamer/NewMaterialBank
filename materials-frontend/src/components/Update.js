@@ -27,7 +27,7 @@ function Update() {
 
 		} catch (error) {
 		  setError(error.message);		
-		  console.error('There has been a problem with your fetch operation:', error);
+		  console.error(error);
 		  setLoading(false)
 		}
 	  };
@@ -74,7 +74,7 @@ function Update() {
       
           navigate('/materials');
         } catch (error) {
-          setError(`Failed to update the material: ${error}`);
+          setError(`${error}`);
         }
       };
 
