@@ -33,7 +33,7 @@ function Update() {
 	  };
 	  
 	  useEffect(() => {
-		fetchData();
+		  fetchData();
 	  }, [id]);
 
 

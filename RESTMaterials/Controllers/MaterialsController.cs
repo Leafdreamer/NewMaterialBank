@@ -81,6 +81,7 @@ namespace RESTMaterials.Controllers
         // PUT api/<MaterialsController>/5
         [HttpPut("{materialID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Material> Put(int materialID, [FromBody] Material value, int userID)
         {
@@ -96,27 +97,33 @@ namespace RESTMaterials.Controllers
 
             if (tbu.WarehouseNo != value.WarehouseNo)
             {
-                changes = changes + $"WarehouseNo changed from {tbu.WarehouseNo} to {value.WarehouseNo}. ";
+                changes = changes + $"WarehouseNo changed from {tbu.WarehouseNo} to {value.WarehouseNo}.{"\n"}";
             }
             if (tbu.Name != value.Name)
             {
-                changes = changes + $"Name changed from {tbu.Name} to {value.Name}. ";
+                changes = changes + $"Name changed from {tbu.Name} to {value.Name}.{"\n"}";
             }
             if (tbu.Type != value.Type)
             {
-                changes = changes + $"Type changed from {tbu.Type} to {value.Type}. ";
+                changes = changes + $"Type changed from {tbu.Type} to {value.Type}.{"\n"}";
             }
             if (tbu.Amount != value.Amount)
             {
-                changes = changes + $"Amount changed from {tbu.Amount} to {value.Amount}. ";
+                changes = changes + $"Amount changed from {tbu.Amount} to {value.Amount}.{"\n"}";
             }
             if (tbu.Description != value.Description)
             {
-                changes = changes + $"Description changed from {tbu.Description} to {value.Description}. ";
+                changes = changes + $"Description changed from {tbu.Description} to {value.Description}.{"\n"}";
             }
             if (tbu.PictureURL != value.PictureURL)
             {
-                changes = changes + $"PictureURL changed from {tbu.PictureURL} to {value.PictureURL}. ";
+                changes = changes + $"PictureURL changed from {tbu.PictureURL} to {value.PictureURL}.{"\n"}";
+            }
+
+            if (changes == "CHANGELOG: ")
+            {
+                changes = "No changes.";
+                return BadRequest("Material remains unedited.");
             }
 
             Log changelog = new Log(changes, editor, DateTime.Now);
@@ -128,7 +135,7 @@ namespace RESTMaterials.Controllers
         
             if (updated == null)
             {
-                return NotFound();
+                return NotFound("Failed to validate material.");
             }
 
             return Ok(updated);

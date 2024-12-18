@@ -31,7 +31,7 @@ function Materials() {
 
 		} catch (error) {
 		  setError(error.message);		
-		  console.error('There has been a problem with your fetch operation:', error);
+		  console.error(error);
 		  setLoading(false)
 		}
 	  };
@@ -195,6 +195,11 @@ function Materials() {
 						  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mr-2"
 						  onClick={() => navigate(`/update/${material.id}`)}>
 						  Edit
+						</button>
+						<button
+						  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mr-2"
+						  onClick={() => navigate(`/changelogs/${material.id}`)}>
+						  View Changelogs
 						</button>
 					  </td>
 					</tr>
