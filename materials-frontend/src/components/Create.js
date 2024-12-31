@@ -4,10 +4,42 @@ import AppContext from './Context'
 
 function Create() {
     const [material, setMaterial] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [warehouses, setWarehouses] = useState([]);
     const navigate = useNavigate();
 
+    const fetchWarehouses = async () => {
+      try {
+        const warResponse = await fetch('http://localhost:5096/api/Warehouses', {
+          method: 'GET', // or 'POST', 'PUT', etc.
+          headers: {
+            'Content-Type': 'application/json',
+            },
+          });
+    
+        if (!warResponse.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const warData = await warResponse.json(); // assuming the response is JSON
+        setWarehouses(warData);
+        console.log(warData);
+  
+        setLoading(false);
+  
+  
+      } catch (error) {
+        setError(error.message);		
+        console.error(error);
+        setLoading(false)
+      }
+    };
+
     useEffect(() => {
+      fetchWarehouses();
+
+
       material.warehouseNo = 1;
       material.type = 'Metal';
       }, []);
@@ -28,6 +60,7 @@ function Create() {
             });
             const data = await response.json();
             material.createdBy = data;
+
         } 
         catch (error) 
         {
@@ -64,7 +97,7 @@ function Create() {
         setMaterial({ ...material, [name]: value }); // Update state for each input field
       };
 
-
+     if (loading) return <p>Loading...</p>;
      if (error) return (
       <div className="mt-4">
         <p>{error}</p>
@@ -76,6 +109,18 @@ function Create() {
         </button>
       </div>
      );
+
+     if (AppContext.email == '') return (
+      <div className="mt-4">
+        <h1>Access Denied. Please log in to continue.</h1>
+        <button
+        type="button"
+        className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+        onClick={() => navigate('/')}>
+        Login
+        </button>
+      </div>
+      );
 
 
 
@@ -95,15 +140,16 @@ function Create() {
               <tbody className="border-collapse border border-slate-400 border-spacing-3">
                 <tr>
                 <td className="px-6 py-4">
-                    <select 
+                    <select
                       value={material.warehouseNo}
                       name="warehouseNo"
-                      onChange={handleChange}
-                      className="border rounded px-2 py-1 w-full">
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                    </select>
+                      onChange={handleChange}>
+		  	              {
+				                warehouses.map((warehouse) => (
+					              <option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>
+				                ))
+		  	              }
+		  	            </select>
                 </td>
                 <td className="px-6 py-4">
                     <input

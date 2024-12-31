@@ -1,32 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import AppContext from "./Context";
+import App from "../App";
 
 function Materials() {
 	const [materials, setMaterials] = useState([]);
+	const [warehouses, setWarehouses] = useState([]);
 	const [filter, setFilter] = useState('');
-	const [sortMethod, setSortMethod] = useState({key: 'updatedAt', direction: 'descending'})
-	const [warehouse, setWarehouse] = useState(1)
+	const [sortMethod, setSortMethod] = useState({key: 'updatedAt', direction: 'ascending'})
+	const [currentWarehouse, setCurrentWarehouse] = useState()
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
 	const fetchData = async () => {
 		try {
-		  const response = await fetch('http://localhost:5096/api/Materials', {
+		  const matResponse = await fetch('http://localhost:5096/api/Materials', {
 			method: 'GET', // or 'POST', 'PUT', etc.
 			headers: {
 				'Content-Type': 'application/json',
 			  },
 		  });
 	  
-		  if (!response.ok) {
+		  if (!matResponse.ok) {
 			throw new Error('Network response was not ok');
 		  }
-	  
-		  const data = await response.json(); // assuming the response is JSON
-		  setMaterials(data);
-		  console.log(data);
+
+		  if (matResponse.status == 204) {
+			throw new Error('No materials were found. At all. Ask the backend specialist for help.')
+		  }
+		  
+		  const matData = await matResponse.json(); // assuming the response is JSON
+		  setMaterials(matData);
+		  console.log(matData);
+
+		  const warResponse = await fetch('http://localhost:5096/api/Warehouses', {
+			method: 'GET', // or 'POST', 'PUT', etc.
+			headers: {
+				'Content-Type': 'application/json',
+			  },
+		  });
+
+		  if (!warResponse.ok) {
+			throw new Error('Network response was not ok');
+		  }
+
+		  const warData = await warResponse.json(); // assuming the response is JSON
+		  setWarehouses(warData);
+		  setCurrentWarehouse(warData[0].id)
+		  console.log(warData);
+
+
 		  setLoading(false);
 
 		} catch (error) {
@@ -41,7 +65,17 @@ function Materials() {
 	  }, []); // Call fetchData when the component mounts
 
 	  if (loading) return <p>Loading...</p>;
-	  if (error) return <p>An error has occurred: {error}</p>;
+	  if (error) return (
+		<div className="mt-4">
+		  <p>{error}</p>
+		  <button
+			type="button"
+			className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+			onClick={() => navigate('/')}>
+			Return to Login
+		  </button>
+		</div>
+	   );
 	  if (AppContext.email == '') return (
 		<div className="mt-4">
 		  <h1>Access Denied. Please log in to continue.</h1>
@@ -76,7 +110,7 @@ function Materials() {
 
 	  // Filtered materials based on the filter input IT WORKS NOW YIPPEE now also updated to work with sorting
 	  const filteredMaterials = sortedMaterials.filter(material =>
-		(material.warehouseNo == warehouse) && (material.name.toLowerCase().includes(filter.toLowerCase()) || material.type.toLowerCase().includes(filter.toLowerCase()) || material.description.toLowerCase().includes(filter.toLowerCase()) || material.amount.toString().toLowerCase().includes(filter.toLowerCase()))
+		(material.warehouseNo == currentWarehouse) && (material.name.toLowerCase().includes(filter.toLowerCase()) || material.type.toLowerCase().includes(filter.toLowerCase()) || material.description.toLowerCase().includes(filter.toLowerCase()) || material.amount.toString().toLowerCase().includes(filter.toLowerCase()))
 	  );
 
 	  // Arrow icons which are neat and user-friendly
@@ -91,6 +125,10 @@ function Materials() {
 		navigate('/');
 	  };
 
+	  const handleWarehouseChange = (e) => {
+		setCurrentWarehouse(e.target.value);
+	  };
+
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 		  <div className="flex justify-between items-center mb-4">
@@ -100,7 +138,14 @@ function Materials() {
 			  value={filter}
 			  onChange={(e) => setFilter(e.target.value)}
 			  className="border rounded px-4 py-2 text-gray-700 w-1/3"/>
-			<h1>Welcome, {AppContext.email}!</h1>
+			  <h1>Welcome, {AppContext.email}!</h1>
+			{AppContext.admin && (
+        		<button
+          		onClick={() => navigate('/adminpanel')}
+          		className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          		Admin Panel
+        		</button>
+      		)}
 			<button
 			  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
 			  onClick={() => navigate('/create')}>
@@ -115,23 +160,40 @@ function Materials() {
 	
 		  {error && <p className="text-red-500">{error}</p>}
 
-		  <div className="flex justify-between items-center mb-4">
+		  <div style={{display: 'flex', justifyContent: 'center'}}>
+		  	<text>Displaying information from {currentWarehouse} - </text> &nbsp;
+		  
+		  	<select onChange={handleWarehouseChange}>
+		  	{
+				warehouses.map((warehouse) => (
+					<option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>
+				))
+		  	}
+		  	</select>
+			
+		  </div>
+		  
+
+		  {/* <div className="flex justify-between items-center mb-4">
 		   <button
 			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-			  onClick={() => setWarehouse(1)}>
+			  onClick={() => setCurrentWarehouse(1)}>
 			  Warehouse 1
 		   </button>
 		   <button
 			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-			  onClick={() => setWarehouse(2)}>
+			  onClick={() => setCurrentWarehouse(2)}>
 			  Warehouse 2
 		   </button>
 		   <button
 			  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-			  onClick={() => setWarehouse(3)}>
+			  onClick={() => setCurrentWarehouse(3)}>
 			  Warehouse 3
 		   </button>
 		  </div>
+		  */}
+
+		  <br></br>
 		  
 	
 		  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

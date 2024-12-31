@@ -56,7 +56,7 @@ namespace RESTMaterials.Controllers
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<object> Post([FromBody] Material value, string? type = "m")
+        public ActionResult<object> Post([FromBody] Material value)
         {
             try
             {

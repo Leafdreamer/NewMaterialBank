@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Update from './components/Update';
 import Create from './components/Create';
 import ChangelogsID from './components/ChangelogsID';
+import AdminPanel from './components/AdminPanel';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/create" element={<Create />} />
           <Route path="/update/:id" element={<Update />} />
           <Route path="/changelogs/:id" element={<ChangelogsID />} />
+          <Route path="/adminpanel" element={<AdminPanel />} />
         </Routes>
       </Router>
     </div>

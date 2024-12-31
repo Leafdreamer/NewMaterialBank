@@ -7,6 +7,7 @@ function ChangelogsID() {
     const [material, setMaterial] = useState([]);
     const [changelogs, setChangelogs] = useState([]);
     const [error, setError] = useState(null);
+	const [sortMethod, setSortMethod] = useState('ascending')
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -38,16 +39,65 @@ function ChangelogsID() {
 		fetchData();
 	  }, [id]); // Call fetchData when the component mounts
 
+	  // New List with Sorted Materials
+	  const sortedChangelogs = [...changelogs].sort((a,b) => {
+		if (a[sortMethod.key] < b[sortMethod.key]) {
+			return sortMethod.direction === 'ascending' ? -1 : 1;
+		}
+		if (a[sortMethod.key] > b[sortMethod.key]) {
+			return sortMethod.direction === 'ascending' ? 1 : -1;
+		}
+		return 0;
+	  });
+
+	  const requestSorting = (key) => {
+		let direction = 'ascending';
+		if (sortMethod.direction === 'ascending') {
+			direction = 'descending';
+		}
+		setSortMethod(direction);
+	  };
+
+	  // Arrow icons which are neat and user-friendly
+	  const getSortIcon = (key) => {
+		if (sortMethod.key !== key) return null;
+		return sortMethod.direction === 'ascending' ? ' | Λ' : ' | V';
+	  };
+
+	  if (loading) return <p>Loading...</p>;
+	  if (error) return (
+		<div className="mt-4">
+		  <p>{error}</p>
+		  <button
+			type="button"
+			className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+			onClick={() => navigate('/materials')}>
+			Return to List
+		  </button>
+		</div>
+	   );
+	  if (AppContext.email == '') return (
+		<div className="mt-4">
+		  <h1>Access Denied. Please log in to continue.</h1>
+		  <button
+			type="button"
+			className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
+			onClick={() => navigate('/')}>
+			Login
+		  </button>
+		</div>
+		);
+
       return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
             <div className="flex justify-between items-center mb-4">
-			    <h1>Currently viewing changelogs for {material.name}</h1>
+				&nbsp; <h1>Currently viewing changelogs for {material.name}</h1>
 			    <button
 			    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
 			    onClick={() => navigate('/materials')}>
 			    Return to List
-			    </button>
+			    </button> &nbsp;
 		  </div>
 	
 		  {error && <p className="text-red-500">{error}</p>}
@@ -67,14 +117,15 @@ function ChangelogsID() {
             	</th>
             	<th
               	scope="col"
-              	className="px-6 py-3 cursor-pointer">
-              	Edit Time
+              	className="px-6 py-3 cursor-pointer"
+				onClick={requestSorting}>
+              	Edit Time {getSortIcon('editTime')}
             	</th>
           	</tr>
         	</thead>
 			<tbody className="border-collapse border border-slate-400 border-spacing-3" style={{ whiteSpace: 'pre-line' }}>
-			  {changelogs.length > 0 ? (
-				changelogs.map((changelog) => {
+			  {sortedChangelogs.length > 0 ? (
+				sortedChangelogs.map((changelog) => {
 				  const formattedEditTime = new Date(changelog.editTime).toLocaleString();
 	
 				  return (

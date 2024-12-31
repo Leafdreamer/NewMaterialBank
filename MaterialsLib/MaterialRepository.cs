@@ -36,6 +36,21 @@ namespace MaterialsLib
             return materialList.FirstOrDefault(x => x.Id == id);
         }
 
+        public List<Material> GetMaterialsByWarehouse(int id)
+        {
+            List<Material> materials = new List<Material>();
+
+            foreach(Material m in materialList)
+            {
+                if (m.WarehouseNo == id)
+                {
+                    materials.Add(m);
+                }
+            }
+
+            return materials;
+        }
+
         public Material AddMaterial(Material material)
         {
             material.ValidateName();
@@ -48,6 +63,7 @@ namespace MaterialsLib
             materialList.Add(material);
             return material;
         }
+        
         public Material? DeleteMaterial(int id)
         {
             Material? tbd = GetMaterialById(id);

@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<MaterialRepository>(new MaterialRepository());
 builder.Services.AddSingleton<UserRepository>(new UserRepository());
+builder.Services.AddSingleton<WarehouseRepository>(new WarehouseRepository());
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>
