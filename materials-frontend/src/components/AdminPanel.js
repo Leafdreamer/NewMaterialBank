@@ -181,7 +181,6 @@ function AdminPanel() {
             </button>
           </div>
       
-          {/* Create User Section */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Create User</h2>
             <form
@@ -231,7 +230,6 @@ function AdminPanel() {
             </form>
           </div>
       
-          {/* Create Warehouse Section */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Create Warehouse</h2>
             <form onSubmit={handleCreateWarehouse} className="flex gap-4 items-center">
@@ -252,7 +250,6 @@ function AdminPanel() {
             </form>
           </div>
       
-          {/* Update Warehouse Section */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Rename Warehouse</h2>
             <form onSubmit={handleUpdateWarehouse} className="flex gap-4 items-center">
@@ -286,7 +283,6 @@ function AdminPanel() {
             </form>
           </div>
       
-          {/* Delete Warehouse Section */}
           <div>
             <h2 className="text-xl font-semibold mb-2">Delete Warehouse</h2>
             <div className="flex gap-4 items-center">
